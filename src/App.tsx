@@ -11,7 +11,7 @@ function App() {
       
       <div className="is-size-2 mb-6">Coming soon!</div>
       
-      <div className="columns">
+      <div className="columns is-mobile">
         <div className="column">
           <figure className='image is-64x64'>
             <img src={musicNote} alt="Music note" />
