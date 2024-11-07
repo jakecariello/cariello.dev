@@ -1,34 +1,18 @@
-import musicNote from './assets/music.quarternote.3.svg'
-import person2 from './assets/person.2.fill.svg'
-import terminal from './assets/apple.terminal.svg'
-
-import './App.css'
+import { Flex, Text } from '@radix-ui/themes'
+import { MdOutlineCode, MdOutlineMusicNote, MdOutlineGroup } from 'react-icons/md'
 
 function App() {
   return (
-    <div className="container is-flex is-flex-direction-column is-align-items-center
-    is-justify-content-center" style={{ minHeight: '100vh' }}>
+    <Flex gap={'5'} direction="column" align="center" justify="center" style={{ height: '100vh' }}>
       
-      <div className="is-size-2 mb-6">Coming soon!</div>
+      <Text size="6">Coming soon!</Text>
       
-      <div className="columns is-mobile">
-        <div className="column">
-          <figure className='image is-64x64'>
-            <img src={musicNote} alt="Music note" />
-          </figure>
-        </div>
-        <div className="column">
-          <figure className='image is-64x64'>
-            <img src={person2} alt="Music note" />
-          </figure>
-        </div>
-        <div className="column">
-          <figure className='image is-64x64'>
-            <img src={terminal} alt="Music note" />
-          </figure>
-        </div>
-      </div>
-    </div>
+      <Flex gap={'5'} direction="row">
+        <MdOutlineMusicNote size={64} />
+        <MdOutlineGroup size={64} />
+        <MdOutlineCode size={64} />
+      </Flex>
+    </Flex>
   )
 }
 
