@@ -2,13 +2,13 @@ import { Flex, Box } from '@radix-ui/themes'
 import {
   MdOutlineCode,
   MdOutlineMusicNote,
-  MdOutlineGroup,
+  MdOutlineBiotech,
 } from 'react-icons/md'
 import { animated, useTrail } from '@react-spring/web'
 
 import { ShaderGradientCanvas, ShaderGradient } from '@shadergradient/react'
 
-const ICONS = [MdOutlineCode, MdOutlineMusicNote, MdOutlineGroup]
+const ICONS = [MdOutlineCode, MdOutlineMusicNote, MdOutlineBiotech]
 const WHITE = '#FFFFFF'
 const COLORS = ['#AEC6CF', '#F0E68C', '#FFB6C1']
 
