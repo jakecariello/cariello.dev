@@ -11,7 +11,7 @@ const ICONS = [MdOutlineCode, MdOutlineMusicNote, MdOutlineBiotech]
 const WHITE = '#FFFFFF'
 const COLORS = ['#AEC6CF', '#F0E68C', '#FFB6C1']
 
-export default function IconTest() {
+export default function IconTest({ size = 100 }: { size?: number }) {
 
   const [trail, api] = useTrail<{ x: number }>(
     ICONS.length,
@@ -47,7 +47,7 @@ export default function IconTest() {
                 color: x.to([0, 0.5, 1], [WHITE, color, WHITE]),
               }}
             >
-              <Icon size={100} />
+              <Icon size={size} />
             </animated.div>
           </animated.div>
         )
