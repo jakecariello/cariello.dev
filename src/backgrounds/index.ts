@@ -1,0 +1,1 @@
+export { default as ShaderGradientBackground } from './shader-gradient'
