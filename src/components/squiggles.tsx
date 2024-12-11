@@ -7,30 +7,6 @@ type SquigglesProps = {
   squiggleWidth?: number
 } & PropsWithChildren<HTMLAttributes<HTMLDivElement>>
 
-class Squiggle {
-  axis: 'x' | 'y'
-  amplitude: number
-  frequency: number
-  color: string
-  level: number
-  progression: number
-
-  constructor(
-    axis: 'x' | 'y',
-    amplitude: number,
-    frequency: number,
-    color: string,
-    level: number,
-    progression: number
-  ) {
-    this.axis = axis
-    this.color = color
-    this.amplitude = _.clamp(amplitude, 0, 200)
-    this.frequency = _.clamp(frequency, 0, 100)
-    this.level = _.clamp(level, 0, 1)
-    this.progression = _.clamp(progression, 0, 1)
-  }
-}
 
 export default function Squiggles(props: SquigglesProps) {
   const container = useRef<HTMLDivElement>(null)

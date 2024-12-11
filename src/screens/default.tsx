@@ -12,7 +12,10 @@ function DefaultScreen() {
   })
 
   return (
-    <div style={{ overflow: 'hidden', position: 'fixed' }}>
+    <div style={{
+      overflow: 'hidden',
+      position: 'fixed'
+    }}>
       <animated.div style={{
         width: '100vw',
         height: '10vh',
