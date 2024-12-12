@@ -5,8 +5,6 @@ import { Theme } from '@radix-ui/themes'
 
 import { DefaultScreen } from './screens'
 
-import './styles.css'
-
 const rootElement = document.getElementById('root')
 if (rootElement) {
   createRoot(rootElement).render(
