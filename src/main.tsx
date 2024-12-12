@@ -13,7 +13,6 @@ if (rootElement) {
         accentColor='mint'
         grayColor='gray'
         panelBackground='translucent'
-        scaling='100%'
         radius='full'
         appearance='dark'
       >

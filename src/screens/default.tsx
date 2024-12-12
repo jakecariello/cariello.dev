@@ -7,9 +7,7 @@ import { useScroll, animated } from '@react-spring/web'
 
 function DefaultScreen() {
 
-  const { scrollYProgress } = useScroll({
-
-  })
+  const { scrollYProgress } = useScroll()
 
   return (
     <div style={{ overflow: 'hidden', position: 'fixed' }}>
