@@ -10,7 +10,7 @@ function DefaultScreen() {
   const { scrollYProgress } = useScroll()
 
   return (
-    <div style={{ overflow: 'hidden', position: 'fixed' }}>
+    <>
       <animated.div style={{
         width: '100vw',
         height: '10vh',
@@ -37,7 +37,7 @@ function DefaultScreen() {
         <h1>Welcome</h1>
       </animated.div>
       <ShaderGradientBackground />
-    </div>
+    </>
   )
 }
 
