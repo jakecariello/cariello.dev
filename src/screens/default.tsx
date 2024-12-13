@@ -19,7 +19,7 @@ function DefaultScreen() {
         width: '100vw',
         height: '10vh',
         position: 'fixed',
-        top: scroll.to([0, .1, 1], ['45vh', '5vh', '5vh']),
+        top: scroll.to([0, .05, 1], ['45vh', '5vh', '5vh']),
       }}>
         <Flex
           direction='column'
@@ -32,7 +32,7 @@ function DefaultScreen() {
 
       <animated.div style={{
         position: 'fixed',
-        top: scroll.to([.1, .2, 1], ['105vh', '15vh', '15vh']),
+        top: scroll.to([.05, .2, 1], ['105vh', '15vh', '15vh']),
       }}>
         <Box>
           <Flex justify={'center'} minWidth={'100vw'}>
@@ -53,7 +53,7 @@ function DefaultScreen() {
 
       <animated.div style={{
         position: 'fixed',
-        top: scroll.to([.2, .3, 1], ['105vh', '75vh', '25vh']),
+        top: scroll.to([.3, .35, 1], ['105vh', '75vh', '75vh']),
       }}>
         <Flex justify={'center'} minWidth={'100vw'}>
 
