@@ -39,7 +39,7 @@ export default function IconTest({ size = 100 }: { size?: number }) {
       {trail.map(({ x }, index) => {
         const [Icon, color] = [ICONS[index], COLORS[index]]
         return (
-          <animated.div style={loopingTrail[index]}>
+          <animated.div style={loopingTrail[index]} key={index}>
             <animated.div
               key={index}
               style={{
