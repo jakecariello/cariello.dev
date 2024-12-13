@@ -3,7 +3,8 @@ import { Avatar, Box, Card, Flex, Grid, Link, Text } from '@radix-ui/themes'
 import { ShaderGradientBackground } from '../backgrounds'
 import { IconTest } from '../components'
 import { useScroll, animated } from '@react-spring/web'
-import { MdLanguage, MdMail, MdPhone, MdWork, MdWorkOutline } from 'react-icons/md'
+import { FaGithub, FaGlobe, FaLinkedin, FaOrcid, FaPhoneAlt } from 'react-icons/fa'
+import { SiGmail } from 'react-icons/si'
 
 
 function DefaultScreen() {
@@ -56,8 +57,7 @@ function DefaultScreen() {
                 <Flex gap="3" align="center">
                   <Avatar
                     size="3"
-                    radius="full"
-                    fallback={<MdPhone size={20} />}
+                    fallback={<FaPhoneAlt size={20} />}
                   />
                   <Box>
                     <Text>(914) 505-0554</Text>
@@ -69,8 +69,7 @@ function DefaultScreen() {
                 <Flex gap="3" align="center">
                   <Avatar
                     size="3"
-                    radius="full"
-                    fallback={<MdWork size={20} />}
+                    fallback={<FaLinkedin size={20} />}
                   />
                   <Box>
                     <Text>jakecariello</Text>
@@ -82,11 +81,10 @@ function DefaultScreen() {
                 <Flex gap="3" align="center">
                   <Avatar
                     size="3"
-                    radius="full"
-                    fallback={<MdMail size={20} />}
+                    fallback={<SiGmail size={20} />}
                   />
                   <Box>
-                    <Text>jakecariello@gmail.com</Text>
+                    <Text>jakecariello</Text>
                   </Box>
                 </Flex>
               </Link>
@@ -95,8 +93,7 @@ function DefaultScreen() {
                 <Flex gap="3" align="center">
                   <Avatar
                     size="3"
-                    radius="full"
-                    fallback={<MdLanguage size={20} />}
+                    fallback={<FaGlobe size={20} />}
                   />
                   <Box>
                     <Text>cariello.dev</Text>
@@ -107,8 +104,7 @@ function DefaultScreen() {
                 <Flex gap="3" align="center">
                   <Avatar
                     size="3"
-                    radius="full"
-                    fallback={<MdWorkOutline size={20} />}
+                    fallback={<FaGithub size={20} />}
                   />
                   <Box>
                     <Text>jakecariello</Text>
@@ -119,8 +115,7 @@ function DefaultScreen() {
                 <Flex gap="3" align="center">
                   <Avatar
                     size="3"
-                    radius="full"
-                    fallback={<MdLanguage size={20} />}
+                    fallback={<FaOrcid size={20} />}
                   />
                   <Box>
                     <Text>0000-0001-7288-9943</Text>
