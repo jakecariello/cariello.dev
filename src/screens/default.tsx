@@ -54,7 +54,7 @@ function DefaultScreen() {
               rows={{ 'sm': '1', 'md': 'repeat(3, 64px)' }}
               width="auto"
             >
-              <Link href="tel:+19145050554">
+              {/* <Link href="tel:+19145050554">
                 <Flex gap="3" align="center">
                   <Avatar
                     size="4"
@@ -64,7 +64,7 @@ function DefaultScreen() {
                     <Text>(914) 505-0554</Text>
                   </Box>
                 </Flex>
-              </Link>
+              </Link> */}
 
               <Link href="https://linkedin.com/in/jakecariello">
                 <Flex gap="3" align="center">
