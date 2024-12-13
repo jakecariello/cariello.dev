@@ -3,7 +3,7 @@ import { Avatar, Box, Card, Flex, Grid, Link, Text } from '@radix-ui/themes'
 import { ShaderGradientBackground } from '../backgrounds'
 import { IconTest } from '../components'
 import { useScroll, animated } from '@react-spring/web'
-import { FaGithub, FaGlobe, FaLinkedin, FaOrcid, FaPhoneAlt } from 'react-icons/fa'
+import { FaGithub, FaGlobe, FaLinkedin, FaOrcid } from 'react-icons/fa'
 import { SiGmail } from 'react-icons/si'
 
 
