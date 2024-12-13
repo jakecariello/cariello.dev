@@ -33,6 +33,7 @@ function DefaultScreen() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'fixed',
       }}>
         <h1>Welcome</h1>
       </animated.div>
