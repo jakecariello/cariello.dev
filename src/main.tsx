@@ -10,7 +10,7 @@ if (rootElement) {
   createRoot(rootElement).render(
     <StrictMode>
       <Theme
-        accentColor='mint'
+        accentColor='indigo'
         grayColor='gray'
         panelBackground='translucent'
         radius='full'

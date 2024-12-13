@@ -30,7 +30,7 @@ export default function IconTest({ size = 100 }: { size?: number }) {
   const loopingTrail = useTrail<{ opacity: number }>(ICONS.length, {
     from: { opacity: 0 },
     to: { opacity: 1 },
-    config: { tension: 130, friction: 50 },
+    config: { tension: 230, friction: 50 },
     loop: { reverse: true },
   })
 

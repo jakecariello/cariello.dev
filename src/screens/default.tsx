@@ -13,6 +13,9 @@ function DefaultScreen() {
 
   return (
     <div>
+      <Flex justify={'center'} minWidth={'100vw'}>
+        <Text>scroll down!</Text>
+      </Flex>
       <animated.div style={{
         width: '100vw',
         height: '10vh',
@@ -30,20 +33,18 @@ function DefaultScreen() {
 
       <animated.div style={{
         position: 'fixed',
-        top: '20vh',
-        opacity: scroll.to([.2, .3, .4, 1], [0, 1, 0]),
-        width: '100vw',
+        top: scroll.to([.1, .2, 1], ['105vh', '15vh']),
       }}>
         <Flex justify={'center'} minWidth={'100vw'}>
-          <Text>Welcome</Text>
+          <Box>
+            <Text>contact me?</Text>
+          </Box>
         </Flex>
       </animated.div>
 
-
       <animated.div style={{
         position: 'fixed',
-        top: '15vh',
-        left: scroll.to([.4, .5, 1], ['-50vw', '0vw']),
+        top: scroll.to([.2, .3, 1], ['105vh', '25vh']),
       }}>
         <Flex justify={'center'} minWidth={'100vw'}>
           <Card>
@@ -56,8 +57,8 @@ function DefaultScreen() {
               <Link href="tel:+19145050554">
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
-                    fallback={<FaPhoneAlt size={20} />}
+                    size="4"
+                    fallback={<FaPhoneAlt size={25} />}
                   />
                   <Box>
                     <Text>(914) 505-0554</Text>
@@ -68,8 +69,8 @@ function DefaultScreen() {
               <Link href="https://linkedin.com/in/jakecariello">
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
-                    fallback={<FaLinkedin size={20} />}
+                    size="4"
+                    fallback={<FaLinkedin size={25} />}
                   />
                   <Box>
                     <Text>jakecariello</Text>
@@ -80,8 +81,8 @@ function DefaultScreen() {
               <Link href="mailto:jakecariello@gmail.com">
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
-                    fallback={<SiGmail size={20} />}
+                    size="4"
+                    fallback={<SiGmail size={25} />}
                   />
                   <Box>
                     <Text>jakecariello</Text>
@@ -92,8 +93,8 @@ function DefaultScreen() {
               <Link href="https://cariello.dev">
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
-                    fallback={<FaGlobe size={20} />}
+                    size="4"
+                    fallback={<FaGlobe size={25} />}
                   />
                   <Box>
                     <Text>cariello.dev</Text>
@@ -103,8 +104,8 @@ function DefaultScreen() {
               <Link href="https://github.com/jakecariello">
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
-                    fallback={<FaGithub size={20} />}
+                    size="4"
+                    fallback={<FaGithub size={25} />}
                   />
                   <Box>
                     <Text>jakecariello</Text>
@@ -114,8 +115,8 @@ function DefaultScreen() {
               <Link href="https://orcid.org/0000-0001-7288-9943">
                 <Flex gap="3" align="center">
                   <Avatar
-                    size="3"
-                    fallback={<FaOrcid size={20} />}
+                    size="4"
+                    fallback={<FaOrcid size={25} />}
                   />
                   <Box>
                     <Text>0000-0001-7288-9943</Text>
