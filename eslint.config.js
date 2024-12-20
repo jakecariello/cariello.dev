@@ -30,7 +30,8 @@ export default tseslint.config(
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'function-paren-newline': ['error', 'consistent'],
-      '@typescript-eslint/no-unused-vars': 'warn'
+      '@typescript-eslint/no-unused-vars': 'warn',
+      "object-curly-newline": ["error", { "multiline": true, "consistent": true }]
     },
   }
 )
