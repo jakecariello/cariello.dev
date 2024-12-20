@@ -1,9 +1,9 @@
 import { animated } from '@react-spring/three'
 import { useTrail } from '@react-spring/web'
 import { MeshWobbleMaterial, PerspectiveCamera } from '@react-three/drei'
-import { Canvas, useLoader } from '@react-three/fiber'
+import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { EffectComposer, SMAA, Vignette } from '@react-three/postprocessing'
-import { Suspense, useEffect } from 'react'
+import { Suspense, useEffect, useRef } from 'react'
 import { Mesh, Vector3 } from 'three'
 import { OBJLoader } from 'three-stdlib'
 
@@ -41,6 +41,20 @@ function Scene() {
     },
   }))
 
+  const refs = useRef<(Mesh | null)[]>([])
+
+  useFrame(() => {
+    refs.current.forEach((ref, i) => {
+      if (ref) {
+        ref.rotation.set(...trail[i].rotation.get())
+      }
+    })
+  })
+
+  useEffect(() => {
+    refs.current = refs.current.slice(0, gridSize * gridSize)
+  }, [gridSize])
+
   useEffect(() => {
     const interval = setInterval(() => {
       setTrail(() => ({
@@ -60,9 +74,20 @@ function Scene() {
 
   return (
     <>
-      {trail.map((props, index) => (
-        <animated.mesh key={index} geometry={index % 2 ? musicNoteGeometry : metalBoxGeometry} position={helixes[index].position} rotation={props.rotation}>
-          <MeshWobbleMaterial factor={.5} speed={4} isMaterial color={0x6f6f6f} metalness={1} roughness={.6} />
+      {trail.map((_, index) => (
+        <animated.mesh
+          key={index}
+          geometry={index % 2 ? musicNoteGeometry : metalBoxGeometry}
+          position={helixes[index].position}
+          ref={(ref) => (refs.current[index] = ref)}
+        >
+          <MeshWobbleMaterial
+            factor={.5}
+            speed={4}
+            color={0x6f6f6f}
+            metalness={1}
+            roughness={.6}
+          />
         </animated.mesh>
       ))}
     </>
