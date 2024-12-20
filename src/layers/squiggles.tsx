@@ -63,7 +63,7 @@ function Scene() {
           Math.random() * Math.PI * 2,
           Math.random() * Math.PI * 2,
         ],
-        delay: Math.random() * 1000,
+        delay: Math.random() * 500,
 
       }))
     }, (Math.random() * 0.5 + 0.5) * X * 1000) // Replace X with the desired number of seconds
@@ -83,7 +83,7 @@ function Scene() {
         >
           <MeshWobbleMaterial
             factor={.5}
-            speed={4}
+            speed={4 + (Math.random() - 0.5) * 2}
             color={0x6f6f6f}
             metalness={1}
             roughness={.6}
