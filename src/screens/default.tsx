@@ -1,9 +1,10 @@
 import { FaDownload } from 'react-icons/fa'
-import { ShaderGradientBackground } from '../backgrounds'
+import { ShaderGradientBackground, Squiggles } from '../layers'
 import { IconTest, LinksCard } from '../components'
 
 import { Box, Flex, Text, Link } from '@radix-ui/themes'
 import { useScroll, animated } from '@react-spring/web'
+import { Box3Helper } from 'three'
 
 
 function DefaultScreen() {
@@ -75,10 +76,37 @@ function DefaultScreen() {
       </animated.div>
 
 
+      <Box
+        style={{
+          height: '100vh',
+          width: '100vw',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: -100,
+          touchAction: 'none',
+          pointerEvents: 'none',
+        }}>
 
+        <Squiggles />
+      </Box>
 
+      <Box
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundColor: 'dark', // Replace with your desired background color or image
+          zIndex: -200, // Ensure it stays behind other content
+          pointerEvents: 'none', // prevent interaction with the background
+          touchAction: 'none', // prevent touch events on the background
+        }}
+      >
 
-      <ShaderGradientBackground />
+        <ShaderGradientBackground />
+      </Box>
     </div >
   )
 }
