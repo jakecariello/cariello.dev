@@ -1,6 +1,6 @@
 import { animated } from '@react-spring/three'
 import { useTrail } from '@react-spring/web'
-import { MeshWobbleMaterial, PerspectiveCamera } from '@react-three/drei'
+import { Environment, MeshWobbleMaterial, PerspectiveCamera } from '@react-three/drei'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { EffectComposer, SMAA, Vignette } from '@react-three/postprocessing'
 import { Suspense, useEffect, useRef } from 'react'
@@ -12,25 +12,30 @@ const X = 5
 
 function Scene() {
   const gridSize = 5
-  const spacing = 1.5
+  const spacing = 1.25
 
-  const [musicNote, metalBox] = useLoader(OBJLoader, ['/music-note.obj', './metal-box.obj'])
+  const [musicNote, metalBox, coffeeCup] = useLoader(OBJLoader, ['/music-note.obj', './metal-box.obj', './coffee-cup.obj'])
   console.log({ musicNote, metalBox })
   const musicNoteGeometry = (musicNote.children[0] as Mesh).geometry.scale(1.5, 1.5, 1.5).scale(.5, .5, .5)
   const metalBoxGeometry = (metalBox.children[0] as Mesh).geometry.scale(0.017, 0.017, 0.017).scale(.5, .5, .5)
+  const coffeeCupGeometry = (coffeeCup.children[6] as Mesh).geometry.scale(.5, .5, .5).scale(.5, .5, .5).scale(.25, .25, .25).translate(0, -.25, 0)
 
-  const helixes = Array.from({ length: gridSize * gridSize }, (_, i) => ({
-    position: new Vector3(
-      (i % gridSize) * spacing - (gridSize * spacing) / 2 + spacing / 2,
-      Math.floor(i / gridSize) * spacing - (gridSize * spacing) / 2 + spacing / 2,
-      0
-    ),
-    rotation: new Vector3(
-      Math.random() * Math.PI * 2,
-      Math.random() * Math.PI * 2,
-      Math.random() * Math.PI * 2
-    ),
-  }))
+  const helixes = Array.from({ length: gridSize * gridSize }, (_, i) => {
+    const row = Math.floor(i / gridSize)
+    const xOffset = row % 2 === 0 ? 0 : spacing / 2
+    return {
+      position: new Vector3(
+        (i % gridSize) * spacing - (gridSize * spacing) / 2 + spacing / 2 + xOffset,
+        row * spacing - (gridSize * spacing) / 2 + spacing / 2,
+        0
+      ),
+      rotation: new Vector3(
+        Math.random() * Math.PI * 2,
+        Math.random() * Math.PI * 2,
+        Math.random() * Math.PI * 2
+      ),
+    }
+  })
   // Define the trail animation
   const [trail, setTrail] = useTrail(gridSize * gridSize, (i) => ({
     rotation: helixes[i].rotation.toArray(),
@@ -63,7 +68,7 @@ function Scene() {
           Math.random() * Math.PI * 2,
           Math.random() * Math.PI * 2,
         ],
-        delay: Math.random() * 500,
+        delay: Math.random() * 1000 * X,
 
       }))
     }, (Math.random() * 0.5 + 0.5) * X * 1000) // Replace X with the desired number of seconds
@@ -77,7 +82,13 @@ function Scene() {
       {trail.map((_, index) => (
         <animated.mesh
           key={index}
-          geometry={index % 2 ? musicNoteGeometry : metalBoxGeometry}
+          geometry={
+            index % 3 === 0
+              ? musicNoteGeometry
+              : index % 3 === 1
+                ? metalBoxGeometry
+                : coffeeCupGeometry
+          }
           position={helixes[index].position}
           ref={(ref) => (refs.current[index] = ref)}
         >
@@ -86,7 +97,7 @@ function Scene() {
             speed={4 + (Math.random() - 0.5) * 2}
             color={0x6f6f6f}
             metalness={1}
-            roughness={.6}
+            roughness={.25}
           />
         </animated.mesh>
       ))}
@@ -97,15 +108,16 @@ function Scene() {
 export default function App() {
   return (
     <Canvas style={{ width: '100%', height: '100%' }}>
-      <ambientLight />
-      <pointLight position={[1, -2, 2]} color={0x0000ff} intensity={20} />
-      <pointLight position={[1, 2, 2]} color={0x00ff00} intensity={15} />
-      <pointLight position={[-2, 1, 2]} color={0xff0000} intensity={17} />
-      <pointLight position={[2, -2, 2]} color={0xff00ff} />
-      <pointLight position={[-2, -2, 2]} color={0xffff00} />
-      <Scene />
-      <PerspectiveCamera makeDefault position={[0, 0, 5]} />
       <Suspense fallback={null}>
+        <ambientLight />
+        <pointLight position={[1, -2, 2]} color={0x0000ff} intensity={20} />
+        <pointLight position={[1, 2, 2]} color={0x00ff00} intensity={15} />
+        <pointLight position={[-2, 1, 2]} color={0xff0000} intensity={17} />
+        <pointLight position={[2, -2, 2]} color={0xff00ff} />
+        <pointLight position={[-2, -2, 2]} color={0xffff00} />
+        <Scene />
+        <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+        <Environment preset='warehouse' />
         <EffectComposer multisampling={4}>
           <Vignette eskil={false} offset={0.1} darkness={.9} />
           <SMAA />

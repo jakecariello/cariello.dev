@@ -83,7 +83,7 @@ function DefaultScreen() {
           top: 0,
           left: 0,
           zIndex: -100,
-          touchAction: 'none',
+          touchAction: 'pan-y',
           pointerEvents: 'none',
         }}>
 
