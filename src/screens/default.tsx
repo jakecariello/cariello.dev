@@ -4,7 +4,6 @@ import { IconTest, LinksCard } from '../components'
 
 import { Box, Flex, Text, Link } from '@radix-ui/themes'
 import { useScroll, animated } from '@react-spring/web'
-import { Box3Helper } from 'three'
 
 
 function DefaultScreen() {
