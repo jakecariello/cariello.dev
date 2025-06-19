@@ -3,23 +3,88 @@ import { useTrail } from '@react-spring/web'
 import { Environment, MeshWobbleMaterial, PerspectiveCamera } from '@react-three/drei'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { EffectComposer, SMAA, Vignette } from '@react-three/postprocessing'
-import { Suspense, useEffect, useRef } from 'react'
-import { Mesh, Vector3 } from 'three'
+import { Suspense, useEffect, useRef, useState } from 'react'
+import { Mesh, Vector3, BufferGeometry } from 'three'
 import { OBJLoader } from 'three-stdlib'
 
 const X = 5
 
+// Fallback geometry in case models fail to load
+const fallbackGeometry = new BufferGeometry()
 
 function Scene() {
-  const gridSize = 20
-  const spacing = 0.8
+  const gridSize = 10
+  const spacing = 2
+  const [modelsLoaded, setModelsLoaded] = useState(false)
+  const [geometries, setGeometries] = useState({
+    musicNote: fallbackGeometry,
+    metalBox: fallbackGeometry,
+    coffeeCup: fallbackGeometry
+  })
 
-  const [musicNote, metalBox, coffeeCup] = useLoader(OBJLoader, ['/music-note.obj', './metal-box.obj', './coffee-cup.obj'])
-  console.log({ musicNote, metalBox })
-  const a = .3
-  const musicNoteGeometry = (musicNote.children[0] as Mesh).geometry.scale(1.5, 1.5, 1.5).scale(a, a, a)
-  const metalBoxGeometry = (metalBox.children[0] as Mesh).geometry.scale(0.017, 0.017, 0.017).scale(a, a, a)
-  const coffeeCupGeometry = (coffeeCup.children[6] as Mesh).geometry.scale(.5, .5, .5).scale(.2, .2, .2).translate(0, -.2, 0).scale(a, a, a)
+  // Load models with error handling
+  const [musicNote, metalBox, coffeeCup] = useLoader(
+    OBJLoader,
+    ['/music-note.obj', '/metal-box.obj', '/coffee-cup.obj'],
+    (loader) => {
+      // Optional: Add loading manager callbacks here
+    }
+  )
+
+  // Process geometries once models are loaded
+  useEffect(() => {
+    try {
+      if (musicNote && metalBox && coffeeCup) {
+        const a = 0.3
+
+        let musicNoteGeometry = fallbackGeometry
+        let metalBoxGeometry = fallbackGeometry
+        let coffeeCupGeometry = fallbackGeometry
+
+        try {
+          if (musicNote.children[0] && (musicNote.children[0] as Mesh).geometry) {
+            musicNoteGeometry = (musicNote.children[0] as Mesh).geometry.clone()
+            musicNoteGeometry.scale(1.5, 1.5, 1.5)
+            musicNoteGeometry.scale(a, a, a)
+          }
+        } catch (e) {
+          console.warn('Error processing music note geometry:', e)
+        }
+
+        try {
+          if (metalBox.children[0] && (metalBox.children[0] as Mesh).geometry) {
+            metalBoxGeometry = (metalBox.children[0] as Mesh).geometry.clone()
+            metalBoxGeometry.scale(0.017, 0.017, 0.017)
+            metalBoxGeometry.scale(a, a, a)
+          }
+        } catch (e) {
+          console.warn('Error processing metal box geometry:', e)
+        }
+
+        try {
+          if (coffeeCup.children[6] && (coffeeCup.children[6] as Mesh).geometry) {
+            coffeeCupGeometry = (coffeeCup.children[6] as Mesh).geometry.clone()
+            coffeeCupGeometry.scale(0.5, 0.5, 0.5)
+            coffeeCupGeometry.scale(0.2, 0.2, 0.2)
+            coffeeCupGeometry.translate(0, -0.2, 0)
+            coffeeCupGeometry.scale(a, a, a)
+          }
+        } catch (e) {
+          console.warn('Error processing coffee cup geometry:', e)
+        }
+
+        setGeometries({
+          musicNote: musicNoteGeometry,
+          metalBox: metalBoxGeometry,
+          coffeeCup: coffeeCupGeometry
+        })
+        setModelsLoaded(true)
+      }
+    } catch (error) {
+      console.warn('Error processing 3D models, using fallback geometry:', error)
+      setModelsLoaded(true)
+    }
+  }, [musicNote, metalBox, coffeeCup])
 
   const helixes = Array.from({ length: gridSize * gridSize }, (_, i) => {
     const row = Math.floor(i / gridSize)
@@ -80,15 +145,15 @@ function Scene() {
 
   return (
     <>
-      {trail.map((_, index) => (
+      {modelsLoaded && trail.map((_, index) => (
         <animated.mesh
           key={index}
           geometry={
             index % 3 === 0
-              ? metalBoxGeometry
+              ? geometries.metalBox
               : index % 3 === 1
-                ? musicNoteGeometry
-                : coffeeCupGeometry
+                ? geometries.musicNote
+                : geometries.coffeeCup
           }
           position={helixes[index].position}
           ref={(ref) => (refs.current[index] = ref)}
@@ -109,7 +174,12 @@ function Scene() {
 export default function App() {
   return (
     <Canvas style={{ width: '100%', height: '100%' }}>
-      <Suspense fallback={null}>
+      <Suspense fallback={
+        <mesh>
+          <boxGeometry args={[1, 1, 1]} />
+          <meshStandardMaterial color="gray" />
+        </mesh>
+      }>
         <ambientLight />
         <pointLight position={[1, -2, 2]} color={0x0000ff} intensity={20} />
         <pointLight position={[1, 2, 2]} color={0x00ff00} intensity={15} />
