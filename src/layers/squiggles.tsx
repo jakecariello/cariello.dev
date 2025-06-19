@@ -16,9 +16,10 @@ function Scene() {
 
   const [musicNote, metalBox, coffeeCup] = useLoader(OBJLoader, ['/music-note.obj', './metal-box.obj', './coffee-cup.obj'])
   console.log({ musicNote, metalBox })
-  const musicNoteGeometry = (musicNote.children[0] as Mesh).geometry.scale(1.5, 1.5, 1.5).scale(.5, .5, .5)
-  const metalBoxGeometry = (metalBox.children[0] as Mesh).geometry.scale(0.017, 0.017, 0.017).scale(.5, .5, .5)
-  const coffeeCupGeometry = (coffeeCup.children[6] as Mesh).geometry.scale(.5, .5, .5).scale(.5, .5, .5).scale(.25, .25, .25).translate(0, -.25, 0)
+  const a = .3
+  const musicNoteGeometry = (musicNote.children[0] as Mesh).geometry.scale(1.5, 1.5, 1.5).scale(a, a, a)
+  const metalBoxGeometry = (metalBox.children[0] as Mesh).geometry.scale(0.017, 0.017, 0.017).scale(a, a, a)
+  const coffeeCupGeometry = (coffeeCup.children[6] as Mesh).geometry.scale(.5, .5, .5).scale(.2, .2, .2).translate(0, -.2, 0).scale(a, a, a)
 
   const helixes = Array.from({ length: gridSize * gridSize }, (_, i) => {
     const row = Math.floor(i / gridSize)
@@ -84,9 +85,9 @@ function Scene() {
           key={index}
           geometry={
             index % 3 === 0
-              ? musicNoteGeometry
+              ? metalBoxGeometry
               : index % 3 === 1
-                ? metalBoxGeometry
+                ? musicNoteGeometry
                 : coffeeCupGeometry
           }
           position={helixes[index].position}
