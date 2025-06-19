@@ -11,8 +11,8 @@ const X = 5
 
 
 function Scene() {
-  const gridSize = 5
-  const spacing = 1.25
+  const gridSize = 20
+  const spacing = 0.8
 
   const [musicNote, metalBox, coffeeCup] = useLoader(OBJLoader, ['/music-note.obj', './metal-box.obj', './coffee-cup.obj'])
   console.log({ musicNote, metalBox })
@@ -117,7 +117,7 @@ export default function App() {
         <pointLight position={[2, -2, 2]} color={0xff00ff} />
         <pointLight position={[-2, -2, 2]} color={0xffff00} />
         <Scene />
-        <PerspectiveCamera makeDefault position={[0, 0, 5]} />
+        <PerspectiveCamera makeDefault position={[0, 0, 8]} />
         <Environment preset='warehouse' />
         <EffectComposer multisampling={4}>
           <Vignette eskil={false} offset={0.1} darkness={.9} />
