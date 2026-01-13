@@ -1,112 +1,85 @@
-import { FaDownload } from 'react-icons/fa'
+import { FaDownload, FaChevronDown } from 'react-icons/fa'
 import { ShaderGradientBackground, Squiggles } from '../layers'
-import { IconTest, LinksCard } from '../components'
+import { LinksCard } from '../components'
 
-import { Box, Flex, Text, Link } from '@radix-ui/themes'
-import { useScroll, animated } from '@react-spring/web'
+import { Flex, Text, Link } from '@radix-ui/themes'
+import { useScroll, animated, useSpring } from '@react-spring/web'
 
+// Shared styles
+const fullWidth: React.CSSProperties = {
+  position: 'fixed',
+  width: '100vw',
+  display: 'flex',
+  justifyContent: 'center',
+}
 
-function DefaultScreen() {
+const backgroundLayer = (zIndex: number): React.CSSProperties => ({
+  position: 'fixed',
+  inset: 0,
+  zIndex,
+  pointerEvents: 'none',
+})
 
-  const { scrollYProgress: scroll } = useScroll()
+function ScrollIndicator() {
+  const pulse = useSpring({
+    from: { opacity: 0.4, y: 0 },
+    to: { opacity: 1, y: 8 },
+    config: { duration: 800 },
+    loop: { reverse: true },
+  })
 
   return (
+    <animated.div style={{ ...pulse, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: -8 }}>
+      <FaChevronDown size={20} style={{ opacity: 0.5 }} />
+      <FaChevronDown size={20} style={{ opacity: 0.7 }} />
+      <FaChevronDown size={20} />
+    </animated.div>
+  )
+}
+
+function DefaultScreen() {
+  const { scrollYProgress: scroll } = useScroll()
+
+  // Tighter equal gaps: contact -> links (8vh), links bottom -> resume (8vh)
+  return (
     <div>
-      <Flex justify={'center'} minWidth={'100vw'}>
-        <Text>scroll down!</Text>
-      </Flex>
+      {/* Scroll indicator - fades out as user scrolls */}
       <animated.div style={{
-        width: '100vw',
-        height: '10vh',
-        position: 'fixed',
-        top: scroll.to([0, .05, 1], ['45vh', '5vh', '5vh']),
+        ...fullWidth,
+        top: scroll.to([0, 0.1, 1], ['40vh', '5vh', '5vh']),
+        opacity: scroll.to([0, 0.15], [1, 0]),
       }}>
-        <Flex
-          direction='column'
-          align='center'
-          justify='center'
-        >
-          <IconTest size={40} />
-        </Flex>
-      </animated.div >
+        <ScrollIndicator />
+      </animated.div>
 
-      <animated.div style={{
-        position: 'fixed',
-        top: scroll.to([.05, .2, 1], ['105vh', '15vh', '15vh']),
-      }}>
-        <Box>
-          <Flex justify={'center'} minWidth={'100vw'}>
-            <Text>contact me?</Text>
+      {/* Contact label - 20vh */}
+      <animated.div style={{ ...fullWidth, top: scroll.to([0.05, 0.2, 1], ['105vh', '20vh', '20vh']) }}>
+        <Text>contact me?</Text>
+      </animated.div>
+
+      {/* Links card - 28vh (8vh gap from contact) */}
+      <animated.div style={{ ...fullWidth, top: scroll.to([0.2, 0.3, 1], ['105vh', '28vh', '28vh']) }}>
+        <LinksCard />
+      </animated.div>
+
+      {/* Resume download - 73vh */}
+      <animated.div style={{ ...fullWidth, top: scroll.to([0.3, 0.4, 1], ['105vh', '73vh', '73vh']) }}>
+        <Link href="https://drive.google.com/file/d/1-QaEQUxkHCAIcBqlqWvLv4zRGYxJ85aa/view?usp=sharing">
+          <Flex align="center" gap="3">
+            <FaDownload size={24} />
+            <Text>Download Resume</Text>
           </Flex>
-        </Box>
+        </Link>
       </animated.div>
 
-      <animated.div style={{
-        position: 'fixed',
-        top: scroll.to([.2, .3, 1], ['105vh', '25vh', '25vh']),
-      }}>
-        <Flex justify={'center'} minWidth={'100vw'}>
-          <LinksCard />
-        </Flex>
-      </animated.div>
-
-
-      <animated.div style={{
-        position: 'fixed',
-        top: scroll.to([.3, .35, 1], ['105vh', '75vh', '75vh']),
-      }}>
-        <Flex justify={'center'} minWidth={'100vw'}>
-
-          <Link href='https://drive.google.com/file/d/1-QaEQUxkHCAIcBqlqWvLv4zRGYxJ85aa/view?usp=sharing'>
-            <Box>
-              <Flex
-                align='center'
-                justify='center'
-                dir='row'
-                gap='3'
-              >
-                <FaDownload size={30} />
-                <Text>Download Resume</Text>
-              </Flex>
-            </Box>
-          </Link>
-
-        </Flex>
-      </animated.div>
-
-
-      <Box
-        style={{
-          height: '100vh',
-          width: '100vw',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          zIndex: -100,
-          touchAction: 'pan-y',
-          pointerEvents: 'none',
-        }}>
-
+      {/* Background layers */}
+      <div style={backgroundLayer(-100)}>
         <Squiggles />
-      </Box>
-
-      <Box
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          backgroundColor: 'dark', // Replace with your desired background color or image
-          zIndex: -200, // Ensure it stays behind other content
-          pointerEvents: 'none', // prevent interaction with the background
-          touchAction: 'none', // prevent touch events on the background
-        }}
-      >
-
+      </div>
+      <div style={backgroundLayer(-200)}>
         <ShaderGradientBackground />
-      </Box>
-    </div >
+      </div>
+    </div>
   )
 }
 
