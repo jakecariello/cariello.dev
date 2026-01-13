@@ -6,6 +6,7 @@ import { EffectComposer, SMAA, Vignette } from '@react-three/postprocessing'
 import { Suspense, useEffect, useRef, useState } from 'react'
 import { Mesh, Vector3, BufferGeometry } from 'three'
 import { OBJLoader } from 'three-stdlib'
+import { useControls } from 'leva'
 
 const X = 5
 
@@ -22,20 +23,38 @@ function Scene() {
     coffeeCup: fallbackGeometry
   })
 
+  const config = useControls({
+    backside: false,
+    samples: { value: 16, min: 1, max: 32, step: 1 },
+    resolution: { value: 256, min: 64, max: 2048, step: 64 },
+    transmission: { value: 0.95, min: 0, max: 1 },
+    roughness: { value: 0.5, min: 0, max: 1, step: 0.01 },
+    clearcoat: { value: 0.1, min: 0, max: 1, step: 0.01 },
+    clearcoatRoughness: { value: 0.1, min: 0, max: 1, step: 0.01 },
+    thickness: { value: 200, min: 0, max: 200, step: 0.01 },
+    backsideThickness: { value: 200, min: 0, max: 200, step: 0.01 },
+    ior: { value: 1.5, min: 1, max: 5, step: 0.01 },
+    chromaticAberration: { value: 1, min: 0, max: 1 },
+    anisotropy: { value: 1, min: 0, max: 10, step: 0.01 },
+    distortion: { value: 0, min: 0, max: 1, step: 0.01 },
+    distortionScale: { value: 0.2, min: 0.01, max: 1, step: 0.01 },
+    temporalDistortion: { value: 0, min: 0, max: 1, step: 0.01 },
+    attenuationDistance: { value: 0.5, min: 0, max: 10, step: 0.01 },
+    attenuationColor: '#ffffff',
+    color: '#ffffff',
+  })
+
   // Load models with error handling
   const [musicNote, metalBox, coffeeCup] = useLoader(
     OBJLoader,
-    ['/music-note.obj', '/metal-box.obj', '/coffee-cup.obj'],
-    (loader) => {
-      // Optional: Add loading manager callbacks here
-    }
+    ['/music-note.obj', '/metal-box.obj', '/coffee-cup.obj']
   )
 
   // Process geometries once models are loaded
   useEffect(() => {
     try {
       if (musicNote && metalBox && coffeeCup) {
-        const a = 0.3
+        const a = 1.2
 
         let musicNoteGeometry = fallbackGeometry
         let metalBoxGeometry = fallbackGeometry
@@ -158,12 +177,11 @@ function Scene() {
           position={helixes[index].position}
           ref={(ref) => (refs.current[index] = ref)}
         >
-          <MeshWobbleMaterial
-            factor={.5}
-            speed={4 + (Math.random() - 0.5) * 2}
-            color={0x6f6f6f}
-            metalness={1}
-            roughness={.25}
+          <meshPhysicalMaterial
+            transparent
+            opacity={0.2}
+            metalness={0.1}
+            {...config}
           />
         </animated.mesh>
       ))}

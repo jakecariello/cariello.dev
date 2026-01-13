@@ -59,7 +59,7 @@ export default function LinksCard() {
           </Flex>
         </Link>
         <Link href="https://orcid.org/0000-0001-7288-9943">
-          <Flex gap="3" align="center">
+          <Flex gap="4" align="center">
             <Avatar
               size="4"
               fallback={<FaOrcid size={25} />}

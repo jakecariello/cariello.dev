@@ -1,4 +1,4 @@
-import { Flex } from '@radix-ui/themes'
+import { Flex, Card } from '@radix-ui/themes'
 import { animated, useTrail } from '@react-spring/web'
 import {
   MdOutlineCode,
@@ -35,23 +35,25 @@ export default function IconTest({ size = 100 }: { size?: number }) {
   })
 
   return (
-    <Flex gap='5' direction='row' onClick={handleClick} >
-      {trail.map(({ x }, index) => {
-        const [Icon, color] = [ICONS[index], COLORS[index]]
-        return (
-          <animated.div style={loopingTrail[index]} key={index}>
-            <animated.div
-              key={index}
-              style={{
-                transform: x.to((x) => `rotate(${x * 360}deg)`),
-                color: x.to([0, 0.5, 1], [WHITE, color, WHITE]),
-              }}
-            >
-              <Icon size={size} />
+    <Card>
+      <Flex gap='5' direction='row' onClick={handleClick} >
+        {trail.map(({ x }, index) => {
+          const [Icon, color] = [ICONS[index], COLORS[index]]
+          return (
+            <animated.div style={loopingTrail[index]} key={index}>
+              <animated.div
+                key={index}
+                style={{
+                  transform: x.to((x) => `rotate(${x * 360}deg)`),
+                  color: x.to([0, 0.5, 1], [WHITE, color, WHITE]),
+                }}
+              >
+                <Icon size={size} />
+              </animated.div>
             </animated.div>
-          </animated.div>
-        )
-      })}
-    </Flex>
+          )
+        })}
+      </Flex>
+    </Card>
   )
 }
