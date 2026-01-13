@@ -1,6 +1,6 @@
 import { animated } from '@react-spring/three'
 import { useTrail } from '@react-spring/web'
-import { Environment, MeshWobbleMaterial, PerspectiveCamera } from '@react-three/drei'
+import { Environment, PerspectiveCamera } from '@react-three/drei'
 import { Canvas, useFrame, useLoader } from '@react-three/fiber'
 import { EffectComposer, SMAA, Vignette } from '@react-three/postprocessing'
 import { Suspense, useEffect, useRef, useState } from 'react'
